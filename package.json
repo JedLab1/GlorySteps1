@@ -1,0 +1,36 @@
+{
+  "name": "glorysteps1",
+  "version": "1.0.0",
+  "main": "expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@react-navigation/bottom-tabs": "^6.6.1",
+    "@react-navigation/native": "^6.1.18",
+    "@react-navigation/native-stack": "^6.11.0",
+    "@shopify/react-native-skia": "^1.2.3",
+    "axios": "^1.7.7",
+    "expo": "^51.0.39",
+    "expo-font": "~12.0.10",
+    "expo-status-bar": "~1.12.1",
+    "react": "^18.2.0",
+    "react-native": "^0.74.5",
+    "react-native-gesture-handler": "~2.16.1",
+    "react-native-outside-press": "^1.2.2",
+    "react-native-reanimated": "~3.10.1",
+    "react-native-redash": "^18.1.3",
+    "react-native-screens": "^3.31.1",
+    "react-native-svg": "^15.2.0",
+    "zustand": "^5.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@types/react": "~18.2.79",
+    "typescript": "~5.3.3"
+  },
+  "private": true
+}
