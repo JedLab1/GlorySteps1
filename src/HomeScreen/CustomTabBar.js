@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Dimensions, SafeAreaView ,Platform} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Animated, { useSharedValue, withTiming, useAnimatedStyle, Easing, useDerivedValue } from 'react-native-reanimated';
 import {
@@ -15,13 +15,14 @@ import SoutienSvg from './svg/SoutienSvg';
 import useStore from './Store';
 const { width } = Dimensions.get('window');
 const TAB_WIDTH = width / 5;
-
+const TAB_HEIGHT = Dimensions.get('window').height/15
 export default function CustomTabBar({ state, descriptors, navigation }) {
   const insets = useSafeAreaInsets();
   const animatedIndex = useSharedValue(state.index);
   const circleSize = useSharedValue(62);
   const shouldHideTab = useStore((state) => state.shouldHideTab);
-  const setShouldHideTab = useStore((state) => state.setShouldHideTab);
+  const yList = useSharedValue([])
+
   const translateX = useDerivedValue(() => {
     // Adjust tab position based on the index
     if (animatedIndex.value === 3) return animatedIndex.value * TAB_WIDTH + 9 - animatedIndex.value;
@@ -31,11 +32,20 @@ export default function CustomTabBar({ state, descriptors, navigation }) {
   });
 
   const translateY = useDerivedValue(() => {
+    // Base adjustment values
+    let adjustment = 0;
+  
+    // Add -10 if the platform is iOS
+    if (Platform.OS === 'ios') {
+      adjustment = -10;
+    }
+  
     // Adjust Y-position based on the index
-    if (animatedIndex.value === 1) return -15;
-    if (animatedIndex.value === 3) return -13;
-    if (animatedIndex.value === 2) return -26;
-    return -5;
+    if (animatedIndex.value === 1) return -TAB_HEIGHT / 10 + adjustment;
+    if (animatedIndex.value === 3) return -TAB_HEIGHT / 10 + adjustment;
+    if (animatedIndex.value === 2) return -TAB_HEIGHT / 5 + adjustment;
+  
+    return adjustment;
   });
 
   const animatedCircleStyle = useAnimatedStyle(() => ({
@@ -57,7 +67,7 @@ export default function CustomTabBar({ state, descriptors, navigation }) {
     return null
   } else {
     return (
-      <View style={{ backgroundColor: '#143F5F' }}>
+      <SafeAreaView style={{ backgroundColor: '#143F5F' }}>
         <View style={[styles.tabBar, { paddingBottom: insets.bottom }]}>
           <Canvas
             style={{
@@ -77,9 +87,6 @@ export default function CustomTabBar({ state, descriptors, navigation }) {
               <BlurMask blur={2} style="inner" />
             </Circle>
           </Canvas>
-          
-          <View style={styles.bigCircle}/>
-  
           {/* Main big circle */}
           {/* Moving circle */}
           <Animated.View style={[styles.movingCircle, animatedCircleStyle]} />
@@ -94,7 +101,7 @@ export default function CustomTabBar({ state, descriptors, navigation }) {
             if (label === 'Home') icon = <HomeSvg />;
             else if (label === 'Cours') icon = <CoursSvg />;
             else if (label === 'Activités') icon = <StarSvg />;
-            else if (label === 'Planning') icon = <PlanningSvg />;
+            else if (label === 'Plans') icon = <PlanningSvg />;
             else if (label === 'Soutien') icon = <SoutienSvg />;
   
             const onPress = () => {
@@ -113,7 +120,7 @@ export default function CustomTabBar({ state, descriptors, navigation }) {
               <TouchableOpacity
                 key={index}
                 onPress={onPress}
-                style={[styles.tab, { transform: [{ translateY: index === 1 || index === 3 ? -15 : index === 2 ? -30 : -5 }] }]}
+                style={[styles.tab, { transform: [{ translateY: index === 1 || index === 3 ? -10 : index === 2 ? -20 : -5 }] }]}
               >
                 {icon}
                 <Text style={[styles.tabLabel, { color: isFocused ? 'black' : 'white' }]}>
@@ -123,7 +130,7 @@ export default function CustomTabBar({ state, descriptors, navigation }) {
             );
           })}
         </View>
-      </View>
+      </SafeAreaView>
     ); 
   }
 }
@@ -134,7 +141,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     backgroundColor: '#143F5F',
-    height: 75,
     position: 'relative',
   },
 
@@ -161,11 +167,11 @@ const styles = StyleSheet.create({
   tabText: {
     fontSize: 24,
     lineHeight: 30,
-    fontWeight: 'bold',
+    
   },
   tabLabel: {
     fontSize: 12,
     marginTop: -2,
-    fontWeight: 'bold',
+    fontFamily:'Poppins-SemiBold'
   },
 });

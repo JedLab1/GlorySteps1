@@ -94,6 +94,8 @@ export default function Keyboard({keyboardHeight,animatedText}) {
               <DeleteSvg/>
              ):char==='*' ?(
               <CloseSvg size={15}/>
+             ):char==='div' ?(
+              <CloseSvg size={15}/>
              ):(
               <Text style={styles.keyText}>{char}</Text>
              )}
@@ -110,6 +112,7 @@ const styles = StyleSheet.create({
         position:'absolute',
         width:'100%',
         height:containerHeight,
+        
         bottom:-20,
         backgroundColor:'#fff',
         borderRadius:20,
@@ -138,7 +141,7 @@ const styles = StyleSheet.create({
       alignItems: "center",
     },
     key: {
-     
+      maxHeight:60,
       width:49,
       margin: 5,
       backgroundColor: "#fff",

@@ -43,13 +43,7 @@ export const ArrowSvg = ()=>(
 )
 
 export default function Graph() {
-  useEffect(() => {
-    StatusBar.setBarStyle('light-content');
-    const delay = 100; // Delay in milliseconds
-    return () => {
-      StatusBar.setBarStyle('dark-content');
-    }; // Cleanup timer on unmount
-  }, []);
+
   const initialWidth = Dimensions.get('window').width;
   const [axisLength, setAxisLength] = useState(initialWidth* 0.8 );
   const [fontSize, setFontSize] = useState(12);
@@ -178,30 +172,18 @@ export default function Graph() {
     pointerEvents:horizantalCursorShown.value?'auto':'none'
   }));
   const animatedConfetti = useAnimatedStyle(()=>({
-    fontSize:verif.value?24:0,
+    fontSize:24,
+    opacity:verif.value?1:0,
     transform:[
       {translateX:2},
       {translateY:-5}
     ]
   }))
   const animatedSuper = useAnimatedStyle(()=>({
-    fontSize:verif.value?16:0,
+    fontSize:16,
+    opacity:verif.value?1:0
   }))
   
-  const addPoint = () => {
-    setPoints((prevPoints) => {
-      const newPoint = { x: 3, y: -3};
-      const updatedPoints = [...prevPoints, newPoint];
-  
-      setLines((prevLines) => [
-        ...prevLines,
-        { direction: 'horizontal', value: newPoint.y, crossedPoints: [] },
-        { direction: 'vertical', value: newPoint.x, crossedPoints: [] }
-      ]);
-  
-      return updatedPoints;
-    });
-  };
   const origin = axisLength / 2;
   const scale = axisLength / 10;
   const coordPool =  Array.from({ length:20 }, (_, index) => ({

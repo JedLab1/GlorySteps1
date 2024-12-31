@@ -1,4 +1,5 @@
 import { View, ActivityIndicator, Dimensions, TouchableWithoutFeedback, Text,StatusBar } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import React, { useState, useEffect, Suspense, lazy,useRef, useCallback } from 'react';
 import Animated ,{ useSharedValue, runOnUI, withTiming, useAnimatedRef, useDerivedValue,scrollTo} from 'react-native-reanimated';
 import { calculateLayout } from '../Duolingo/Layout';
@@ -20,18 +21,7 @@ export default function Content({keyboardHeight,words,animatedText}) {
   
 
   const staticLineUnmount =useSharedValue(false)
-  useEffect(() => {
-    StatusBar.setBarStyle('light-content');
-    const delay = 100; // Delay in milliseconds
-    const timer = setTimeout(() => {
-      setShowDuolingo(true); // Show Duolingo after the delay
-    }, delay);
 
-    return () => {
-      clearTimeout(timer)
-      StatusBar.setBarStyle('dark-content');
-    }; // Cleanup timer on unmount
-  }, []);
 
   const scrollViewRef= useRef()
   const [duolingoRendered, setDuolingRendered] = useState(false);
@@ -50,8 +40,8 @@ export default function Content({keyboardHeight,words,animatedText}) {
   });
   return (
     
-    <Animated.ScrollView style={{ flex: 1}} ref={animatedRef} >
-      <View style={{ flex: 1,minHeight:screenHeight-100}}>
+    <ScrollView style={{ flex: 1}} ref={animatedRef} >
+      <View style={{ flex: 1,minHeight:screenHeight-200}}>
       {showDuolingo ? (
         <>
         <Suspense fallback={<ActivityIndicator size="large" color="transparent" />}>
@@ -83,7 +73,7 @@ export default function Content({keyboardHeight,words,animatedText}) {
       )}
 
     </View>
-    </Animated.ScrollView>
+    </ScrollView>
 
   );
 }

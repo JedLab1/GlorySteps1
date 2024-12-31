@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderTopWidth: 2,
     borderBottomWidth: 2,
-    borderColor: '#edeaea',
+    borderColor: '#edeaea', 
   },
 });
 import Validate from '../HomeScreen/svg/Validate';
@@ -27,7 +27,7 @@ const Duolingo = ({
   containerHeight,
   keyboardHeight,
   staticLineUnmount, scroll,
-  animatedText
+  animatedText, scrollViewRef
  }) => {
   const [staticLineList, setStaticLineList] = useState([]);
   // Animated style for dynamic container height
@@ -235,6 +235,7 @@ const Duolingo = ({
           onRendering={onRendering}
           offsets={lineList}
           keyboardHeight={keyboardHeight}
+          scrollViewRef={scrollViewRef}
         >
           {lineList.map((item,index) => (
             

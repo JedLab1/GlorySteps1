@@ -1,8 +1,8 @@
 // screens/HomeScreen.js
 import React,{useEffect,useState,useRef} from 'react';
-import { View, Text, StyleSheet, Button ,ScrollView,StatusBar, TouchableWithoutFeedback,TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet, Button ,ScrollView,StatusBar, TouchableWithoutFeedback,TouchableOpacity, SafeAreaView} from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import CustomTabBar from './CustomTabBar';
 import HomeScreenContent from './HomeScreenContent';
 import ActivitesScreenContent from './ActivitesScreenContent';
@@ -20,7 +20,7 @@ import FractionMethod from '../Method/FractionMethod';
 import Atome from '../Method/Atome';
 
 const Tab = createBottomTabNavigator();
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 const handleNavigateToNewScreen = (navigation) => () => navigation.navigate('NewScreen');
 
@@ -158,16 +158,16 @@ const PlanningScreen = () => {
       )
     }
 
-  } else {
+  } else { 
     return(
-      <View style={styles.content}>
+      <SafeAreaView style={styles.content}>
         
-      <View style={{alignSelf:'center',flexDirection:'row',justifyContent:'center',borderWidth:1.3,borderRadius:10,borderColor:'#2983C5'}}>
-        <View style={{padding:5,backgroundColor:'#2983C5',borderRadius:8,borderWidth:2,borderColor:'#2983C5'}}>
-        <Text style={{color:'white'}}>Maths</Text>
+      <View style={{alignSelf:'center',flexDirection:'row',justifyContent:'center',borderRadius:10,backgroundColor:'#E8E6E8',padding:3}}>
+        <View style={{paddingHorizontal:5,backgroundColor:'#fff',borderRadius:8,justifyContent:'center'}}>
+        <Text style={{fontFamily:'Poppins-Regular'}}>Maths</Text>
         </View>
         <View style={{padding:5}}>
-        <Text>Phy-Chimie</Text>  
+        <Text style={{fontFamily:'Poppins-Regular'}}>Phy-Chimie</Text>  
         </View>
         
         
@@ -227,7 +227,7 @@ const PlanningScreen = () => {
         </View>
       </View>
 
-      </View>
+      </SafeAreaView>
     )
   }
 };
@@ -256,7 +256,7 @@ function TabNavigator() {
         name="Activités"
         component={PlanningScreen}
       />
-      <Tab.Screen name="Planning" component={PlanningScreen} />
+      <Tab.Screen name="Plans" component={PlanningScreen} />
       <Tab.Screen name="Soutien" component={SoutienScreen} />
     </Tab.Navigator>
   );
@@ -301,7 +301,7 @@ const styles = StyleSheet.create({
   },
   welcomeText: {
     fontSize: 16,
-    fontWeight: 'medium',
+    fontFamily:'Poppins-Regular'
   },
   chapterContainer:{
     width:50,

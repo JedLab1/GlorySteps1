@@ -1,5 +1,5 @@
 import React ,{useEffect}from 'react';
-import { View, Text, StyleSheet, StatusBar, TouchableOpacity, Pressable,Dimensions } from 'react-native';
+import { View, Text, StyleSheet, StatusBar, TouchableOpacity, Pressable,Dimensions, SafeAreaView } from 'react-native';
 import Svg, { Line,G,Rect,Mask,Path,Defs,ClipPath } from 'react-native-svg';
 import useStore from './Store';
 import {
@@ -119,6 +119,18 @@ export const CloseSvg = ({size})=>(
 
 const Header = ({isFunction,setShowFunction,isChemistry,setShowChemistry}) => {
   const { setShouldHideTab, shouldHideTab,showDuolingo,setShowDuolingo } = useStore();
+  useEffect(() => {
+    StatusBar.setBarStyle('light-content');
+    const delay = 100; // Delay in milliseconds
+    const timer = setTimeout(() => {
+      setShowDuolingo(true); // Show Duolingo after the delay
+    }, delay);
+
+    return () => {
+      clearTimeout(timer)
+      StatusBar.setBarStyle('dark-content');
+    }; // Cleanup timer on unmount
+  }, []);
   const handleClose = () => {
     if (isFunction) {
       setShouldHideTab(false)
@@ -138,11 +150,11 @@ const Header = ({isFunction,setShowFunction,isChemistry,setShowChemistry}) => {
   };
   const { width } = Dimensions.get('window');
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Canvas style={{
             position: 'absolute',
             left: -400,
-            bottom: -width / 2+160 ,//165
+            bottom: -width / 2+165 ,//165
             width: width + 800,
             height: width + 800,
             }}>
@@ -153,8 +165,8 @@ const Header = ({isFunction,setShowFunction,isChemistry,setShowChemistry}) => {
         color={'#143F5F'}
       >
       <LinearGradient
-        start={vec((width + 800) / 2, (width + 300))} // Top of gradient (vertical orientation)
-        end={vec((width + 800) / 2, (width + 1200))} // Bottom of gradient
+        start={vec((width + 900) / 2, (width + 300))} // Top of gradient (vertical orientation)
+        end={vec((width + 800) / 2, (width + 800))} // Bottom of gradient
         colors={["#143F5F", "#2983C5"]}
         />
       </Circle>
@@ -186,14 +198,14 @@ const Header = ({isFunction,setShowFunction,isChemistry,setShowChemistry}) => {
         </View>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container:{
     zIndex:1,
-    paddingTop:StatusBar.currentHeight,
+    paddingTop:StatusBar.currentHeight+10,
   },
   headerContainer:{
     paddingHorizontal:10,

@@ -7,13 +7,7 @@ import Animated,{ useAnimatedStyle, useSharedValue,withTiming,withSpring } from 
 const yPos = Dimensions.get('window').height/2-30
 const xPos = Dimensions.get('window').width*0.9
 export default Atome = () => {
-    useEffect(() => {
-        StatusBar.setBarStyle('light-content');
-        const delay = 100; // Delay in milliseconds
-        return () => {
-          StatusBar.setBarStyle('dark-content');
-        }; // Cleanup timer on unmount
-      }, []);
+
     const translationX = useSharedValue(0)
     const translationY = useSharedValue(0)
     const isAnimating = useSharedValue(false)

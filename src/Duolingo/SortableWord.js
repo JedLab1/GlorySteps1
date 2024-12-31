@@ -19,6 +19,7 @@ export default function SortableWord({
   isActive,
   keyboardHeight,
   onRendering,
+  scrollViewRef,
 }) {
   const offset = offsets[index];
   const isGestureActive = useSharedValue(false)
@@ -68,10 +69,11 @@ const checkOverlapForSwap = (x, y) => {
   // Pan gesture handler
   const pan = Gesture.Pan()
     .activateAfterLongPress(100)
+    .blocksExternalGesture(scrollViewRef)
     .onStart((e)=>{  
       
-      if (!isActive || keyboardHeight.value!==0 || offset.order.value>1 && e.x<35) return;  // Disable the gesture if isActive is true    
-      console.log(e.x);
+      if (!isActive || keyboardHeight.value!==0 ) return;  // Disable the gesture if isActive is true    
+
       translation.x.value = offset.x.value;
       translation.y.value = offset.y.value;
       originalX.value = translation.x.value
@@ -79,7 +81,7 @@ const checkOverlapForSwap = (x, y) => {
       isGestureActive.value=true
     })
     .onUpdate((event) => {
-      if (!isActive || keyboardHeight.value!==0 || offset.order.value>1 &&  event.x<35) return;  // Disable the gesture if isActive is true
+      if (!isActive || keyboardHeight.value!==0 ) return;  // Disable the gesture if isActive is true
 
       offset.status.value='dragging'
     
@@ -88,7 +90,7 @@ const checkOverlapForSwap = (x, y) => {
       checkOverlapForSwap(translation.x.value,translation.y.value);
     })
     .onEnd((event ) => {
-      if (!isActive || keyboardHeight.value!==0 || offset.order.value>1 && event.x<35) return;  // Disable the gesture if isActive is true
+      if (!isActive || keyboardHeight.value!==0 ) return;  // Disable the gesture if isActive is true
       isAnimating.value = true;
       offset.status.value='resting'
       translation.x.value = withSpring(

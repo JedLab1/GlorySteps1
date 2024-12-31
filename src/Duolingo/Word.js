@@ -83,8 +83,9 @@ const Word = ({ word, offset, isActive, offsets, containerHeight, containerWidth
       backgroundColor: isDragging ? 'white' : 'transparent',
       // Add shadow properties for iOS
       shadowColor: 'black',
-      shadowOpacity:isDragging ? 0.5 : 0, // Adjust as needed
-      shadowRadius: isDragging ? 10 : 0, // Adjust as needed
+      shadowOpacity: isDragging ? 0.2 : 0, // Adjust for lighter shadow
+      shadowRadius: isDragging ? 3 : 0, // Adjust for subtler effect
+      
       elevation:isDragging ? 3 : 0,
     };
     
@@ -392,7 +393,7 @@ animatedText.value = (() => {
             >
           <Pressable onPress={handlePress}>
           <Animated.View style={[signStyle]}  >
-            <Animated.Text style={[styles.text,animatedTextStyle,{lineHeight:18,transform:[{translateY:4}]}]}>{displaySign}</Animated.Text>
+            <Animated.Text style={[styles.text,animatedTextStyle,{lineHeight:18,transform:[{translateY:4}]}]}>{interactiveSign.value}</Animated.Text>
           </Animated.View>
           </Pressable>
           </OutsidePressHandler>

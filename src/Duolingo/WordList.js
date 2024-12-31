@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
       flexDirection:'row',
     },
 })    
-export default function WordList({children, containerHeight,isActive,onRendering,offsets,index,keyboardHeight}) {
+export default function WordList({children, containerHeight,isActive,onRendering,offsets,index,keyboardHeight,scrollViewRef}) {
     const [ready, setReady] = useState(false);
     if (!ready) {
         return (
@@ -54,6 +54,7 @@ export default function WordList({children, containerHeight,isActive,onRendering
         isActive={isActive}
         onRendering={onRendering}
         keyboardHeight={keyboardHeight}
+        scrollViewRef={scrollViewRef}
       >
         {React.cloneElement(child, { offset,isMain:true,offsets,containerHeight,containerWidth })} 
       </SortableWord>

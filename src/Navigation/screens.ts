@@ -9,15 +9,8 @@ export const screens: Screen[] = [
     navigationId: "Duolingo Algebra",
   },
   {
-    name: "Function Graph 📈",
-    navigationId: "Function Graph",
-  },
-  {
     name: "Fraction Method /",
     navigationId: "Fraction Method",
   },
-  {
-    name: "Home Screen 🏠",
-    navigationId: "Home Screen",
-  },
+
 ];
